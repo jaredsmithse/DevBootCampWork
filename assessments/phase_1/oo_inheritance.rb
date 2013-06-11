@@ -14,7 +14,6 @@ class Vehicle
 	def brake
 		@status = :stopped
 	end
-
 end
 
 class Car < Vehicle
@@ -85,30 +84,33 @@ end
 #######################
 
 my_car = Car.new(:color => "black")
-puts my_car.drive == :driving
-puts my_car.brake == :stopped
+my_bike = Motorbike.new(:color => "red")
+my_bus = Bus.new(:color => "yellow", :wheels => 6, :num_seats => 20, :fare => 2)
+
 
 car_gas = my_car.needs_gas?
 puts car_gas == true || car_gas == false
+puts my_car.drive == :driving
+puts my_car.brake == :stopped
 
 
-my_bus = Bus.new(:color => "yellow", :wheels => 6, :num_seats => 20, :fare => 2)
+bike_gas = my_bike.needs_gas?
+puts bike_gas == true || bike_gas == false
+puts my_bike.drive == :fast
+puts my_bike.brake == :stopped
+puts my_bike.weave_through_traffic == :driving_like_a_crazy_person
+
+
+bus_gas = my_bus.needs_gas?
+puts bus_gas == true || bus_gas == false
 puts my_bus.drive == :driving || my_bus.drive == :stopped
 puts my_bus.brake == :stopped
 my_bus.admit_passenger("Lily",4)
 puts my_bus.passengers == ["Lily"]
 
-bus_gas = my_bus.needs_gas?
-puts bus_gas == true || bus_gas == false
 
 
-my_bike = Motorbike.new(:color => "red")
-puts my_bike.drive == :fast
-puts my_bike.brake == :stopped
-puts my_bike.weave_through_traffic == :driving_like_a_crazy_person
 
-bike_gas = my_bike.needs_gas?
-puts bike_gas == true || bike_gas == false
 
 
 
