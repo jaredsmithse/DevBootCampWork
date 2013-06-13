@@ -30,13 +30,9 @@ class PersonParser
   end
   
   def people
-    # If we've already parsed the CSV file, don't parse it again.
-    # Remember: @people is +nil+ by default.
     return @people if @people
+
     @people = []
-    # We've never called people before, now parse the CSV file
-    # and return an Array of Person objects here.  Save the
-    # Array in the @people instance variable.
     CSV.foreach(@file, 'r') do |line|
       next if line[0] == "id"
       @people << Person.new(line)
@@ -54,17 +50,26 @@ class PersonParser
   end
 
   def save_as_yaml
-
+    File.open('./parsedcsv.yml','w') do |config|
+      config.puts @people.to_yaml
+    end
   end
 
   def save_as_json
-
+    ready_for_json = Hash[@people.map {|person| [person.id, [person.fname, person.lname, person.email, person.phone, person.created_at]]}]
+    File.open('./parsedcsv.json','w') do |config|
+      config.puts ready_for_json.to_json
+    end
   end
 
 end
  
 parser = PersonParser.new('people.csv')
+
 parser.people
+
+parser.save_as_json
 parser.save
+parser.save_as_yaml
 
 puts "There are #{parser.people.size} people in the file '#{parser.file}'."
