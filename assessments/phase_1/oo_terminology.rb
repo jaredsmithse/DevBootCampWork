@@ -70,6 +70,7 @@
 		# # classes and other instances of that same class. Below is an example demonstrating
 		# # the differences.
 		#
+		# > code taken from tutorial
 		# class Parent
 		#   private #change to protected to test differences
 		#   def name
@@ -99,35 +100,108 @@
 		# # => Mommy
 		# # => Mommy
 		# # => Mommy
+
 ##################################
 ### inheritance or composition ###
 ##################################
 
+	### inheritance ##
+	# # Inheritance is using the methods and attributes of another class to
+	# # define new kinds (but still similar) of classes. In my example, you 
+	# # would have a Human class that Parent and Child inherit from.
+	# class Human
+	# 	def initialize(gender, hair_color, age = 0)
+	# 		@age = age
+	# 		@hair_color = hair_color
+	# 		@gender = gender
+	# 	end
+	# end
+	#
+	# def Parent < Human
+	# end
+	#
+	# def Child < Human
+	# end
 
+	### composition ##
+	# # Composition is a way of design where objects are made up of other objects.
+	# # In the people problem space it would be each person is an arm, a leg, 
+	# # a head, etc.
+	# class Human
+	# 	def initialize(head, arm, leg, torso)
+	# 		@head = head
+	# 		@arm = arm
+	# 		@leg = leg
+	# 		@torso = torso
+	# 	end
+	# end
 
+	## reasoning ##
+	# In this problem space I think that inheritance would be better. There are many
+	# different kinds of people and they are all made up of the same parts. Only in 
+	# the case of evolution would we need to keep track of these parts on a low level.
 
+####################
+### going deeper ###
+####################
 
+	### Single Responsibility/Separation of Concerns ##
+	# # These concepts are about your methods and classes not doing too much and
+	# # not having a 'god class' or a blob. Methods should only have one thing 
+	# # they do and classes should hold what they need to.
+	#
+	# #before
+	# class Parent
+	# 	def sleep
+	# 		if child.awake == false
+	# 			awake = false
+	# 		end
+	# 	end
+	# end
+	# class Child
+	# 	attr_reader :awake
+	# 	def initialize
+	# 		@awake
+	# 	end
+	#
+	# #after
+	# class Parent
+	# 	def sleep
+	# 		awake = false if child.asleep?
+	# 	end
+	# end
+	# class Child
+	# 	def initialize
+	# 		@awake
+	# 	end
+	# 	def asleep?
+	# 		true unless @awake
+	# 	end
+	# end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	### Reducing Dependencies/Decoupling Objects ##
+	# # Decoupling of your classes is making them more autonomous. An advantage to 
+	# # this is when you make changes to your code and it breaks you can easily
+	# # trace how the objects are interacting if there is less interaction. This 
+	# # by nature makes the likeliness of your code breaking during change lower.
+	#
+	# #before
+	# class Parent
+	# 	def ask_permission(child_sender)
+	# 		true unless child_sender.has_been_naughty?
+	# 	end
+	# end
+	# class Child
+	# 	def jump_on_bed
+	# 		jumping_on_bed = true if parent.ask_permission(self)
+	# 	end
+	# end
+	#
+	# #after
+	# class Parent
+	# end
+	# class Child
+	# 	def jump_on_bed
+	# 		jumping_on_bed = true
+	# 	end
+	# end
