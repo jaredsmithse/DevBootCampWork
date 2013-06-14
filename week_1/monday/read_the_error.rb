@@ -4,8 +4,7 @@
 ##1##
 def mean(numbers)
   sum = numbers.inject(:+)
-  
-  return sum / numbers.length
+  sum / numbers.length
 end
 
 # This will throw an error. Change this line so that it works.
@@ -15,8 +14,7 @@ sample_avg = mean([5, 3, 6, 10])
 ##2##
 def mean(*numbers)
   sum = numbers.inject(:+)
-  
-  return sum / numbers.length
+  sum / numbers.length
 end
 
 # This will throw an error. Change this line so that it works.

@@ -3,11 +3,7 @@
 # TODO: Print the 1st, 3rd, 5th, 7th, etc. elements of a list on separate lines.
 #       You should make use of Enumerable#each_with_index
 def print_odd_indexed_integers(array)
-  array.each_with_index do |int, index|
-    if index % 2 == 1
-      puts int
-    end
-  end
+  array.each_with_index {|int, index| puts int if index.odd?}
 end
 
 # TODO: Return the odd numbers from a list of integers.
