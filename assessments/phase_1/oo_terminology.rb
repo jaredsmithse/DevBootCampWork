@@ -10,58 +10,91 @@
 		# # allows for modifying variables that are within the class. Attr_accessor allows
 		# # for you to do both without having to list each variable twice. These get rid of 
 		# # the necessity to write explicit getter and setter methods.
-		# class Parent
-		# 	#this...
-		# 	attr_accessor :name
-		# 	#and this...
-		# 	attr_reader :age
-		# 	def initialize(name, age)
+		
+		# # This is the same...
+		# class BankAccount
+		# 	def initialize(name)
 		# 		@name = name
-		# 		@age = age
+		# 		@balance = 0
 		# 	end
-		#
-		# 	# ...replaces this
 		# 	def name
 		# 		@name
 		# 	end
 		# 	def name=(new_name)
 		# 		@name = new_name
 		# 	end
-		#
-		# 	# ...and this
-		# 	def age
-		# 		@age
+		# 	def balance
+		# 		@balance
 		# 	end
 		# end
+		#
+		# # As this...
+		# class BankAccount
+		# 	attr_reader :balance
+		# 	attr_accessor :name
+		# 	def initialize(name)
+		# 		@name = name
+		# 		@balance = 0
+		# 	end
+		# end
+
 
 		## instance and class methods ##
 		# Instance methods change or modify that instance's internal state while a class
 		# method performs a certain operation without the need for that class to be
 		# instantiated. An example would be whenever you use YourClass.new or Math.sqrt(n).
 
-		class Person
-
-		end
-
+		# class BankAccount
+		# 	attr_reader :balance
+		# 	attr_accessor :name
+		# 	def initialize(name)
+		# 		@name = name
+		# 		@balance = 0
+		# 	end
+		#
+		# 	#class method
+		# 	def self.create_for(name)
+		# 		@accounts ||= []
+		# 		@accounts << BankAccount.new(name)
+		# 	end
+		#
+		# 	#instance method
+		# 	def deposit(amount)
+		# 		@balance += amount
+		# 	end
+		# end
 
 
 		### instance and class variables ##
 		# # Instance variables are different across instances of an object whereas a class
 		# # variable is the same across instances and if one class updates that variable, 
 		# # then every other class now has that updated variable.
+		
+		# class BankAccount
+		# 	attr_reader :balance
+		# 	attr_accessor :name
+		# 	# class variable
+		# 	@@number_of_accounts ||= 0
+		# 	def initialize(name)
+		# 		#instance variable
+		# 		@name = name
+		# 		@balance = 0
+		# 		@@number_of_accounts += 1
+		# 	end
 		#
-		# class Child
-		# end
+		# 	#class method
+		# 	def self.create_for(name)
+		# 		@accounts ||= []
+		# 		@accounts << BankAccount.new(name)
+		# 	end
 		#
-		# # In the 'real world' this may not exactly be necessary but I find this 
-		# # to be one of the only applications to the problem space. When one twin
-		# # ages, all of them age
-		# class Twin < Child
-		# 	@@age = 0
-		# 	def get_older
-		# 		@@age += 1
+		# 	#instance method
+		# 	def deposit(amount)
+		# 		@balance += amount
 		# 	end
 		# end
+
+		
 
 		### public and private methods ##
 		# # Public methods are methods that can be accessed from outside of the class where.
@@ -69,37 +102,51 @@
 		# # Protected, which is worth noting, is like private but can be calle from inheriting
 		# # classes and other instances of that same class. Below is an example demonstrating
 		# # the differences.
-		#
-		# > code taken from tutorial
-		# class Parent
-		#   private #change to protected to test differences
-		#   def name
-		#     'Mommy'
-		#   end
-		# end
-		#
-		# class Child < Parent
-		#   def get_parent_name
-		#     # Implicit receiver
-		#     puts name
-		#
-		#     # Explicit receiver
-		#     puts self.name rescue puts 'NoMethodError'
-		#
-		#     # Explicit receiver
-		#     puts Child.new.name rescue puts 'NoMethodError'
-		#   end
-		# end
-		#
-		# #Child.new.get_parent_name
-		# ## with private ##
-		# # => Mommy
-		# # => NoMethodError
-		# # => NoMethodError
-		# ## with protected ##
-		# # => Mommy
-		# # => Mommy
-		# # => Mommy
+		
+		class BankAccount
+			attr_reader :balance
+			attr_accessor :name
+			# class variable
+			@@number_of_accounts ||= 0
+			def initialize(name)
+				#instance variable
+				@name = name
+				@balance = 0
+				@@number_of_accounts += 1
+			end
+
+			#class method
+			def self.create_for(name)
+				@accounts ||= []
+				@accounts << BankAccount.new(name) 
+			end
+
+			#instance method
+			def deposit(amount)
+				@balance += amount
+			end
+
+			def withdraw(amount)
+				@balance -= amount unless overdrawn?
+			end
+
+			private
+			def overdrawn?
+				@balance < 1
+			end
+		
+		end
+
+		jared = BankAccount.new("Jared Smith")
+		
+		jared.deposit(100)
+		puts jared.balance
+		jared.withdraw(100)
+		puts jared.balance
+		jared.withdraw(10)
+		puts jared.balance
+
+
 
 ##################################
 ### inheritance or composition ###
@@ -205,3 +252,5 @@
 	# 		jumping_on_bed = true
 	# 	end
 	# end
+
+
