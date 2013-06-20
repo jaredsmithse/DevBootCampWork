@@ -155,38 +155,49 @@
 	### inheritance ##
 	# # Inheritance is using the methods and attributes of another class to
 	# # define new kinds (but still similar) of classes. In my example, you 
-	# # would have a Human class that Parent and Child inherit from.
-	# class Human
-	# 	def initialize(gender, hair_color, age = 0)
-	# 		@age = age
-	# 		@hair_color = hair_color
-	# 		@gender = gender
-	# 	end
+	# # would have a BankAccount class that CheckingAccount and SavingsAccount 
+	# # inherit from.
+  #
+	# class BankAccount
+	# 	def initialize
+	# 		@name = name
+	# 		@balance = 0
+	# 		@@number_of_accounts += 1
+	#   end
 	# end
 	#
-	# def Parent < Human
+	# def CheckingAccount < BankAccount
 	# end
 	#
-	# def Child < Human
+	# def SavingsAccount < BankAccount
 	# end
 
 	### composition ##
 	# # Composition is a way of design where objects are made up of other objects.
-	# # In the people problem space it would be each person is an arm, a leg, 
-	# # a head, etc.
-	# class Human
-	# 	def initialize(head, arm, leg, torso)
-	# 		@head = head
-	# 		@arm = arm
-	# 		@leg = leg
-	# 		@torso = torso
+	# # In the case of a bank statement, it would be great to have a person object
+	# # instead of just a name and a bunch of other attributes about that person.
+	#
+  #
+	# class Person
+	# 	def initialize(name, address, ssn, phone)
+	# 		@name = name
+	# 		@address = address
+	# 		@ssn = ssn
+	# 		@phone = phone
 	# 	end
 	# end
+  #
+	# class BankAccount
+	# 	def initialize(person)
+	# 	@owner = person
+	# 	@balance = 0
+	# end
+
 
 	## reasoning ##
-	# In this problem space I think that inheritance would be better. There are many
-	# different kinds of people and they are all made up of the same parts. Only in 
-	# the case of evolution would we need to keep track of these parts on a low level.
+	# I think that a mix of both inheritance and composition is needed. For 
+	# different kinds of accounts inheritance is great but within those accounts
+	# composition works great with the case of storing people objects.
 
 ####################
 ### going deeper ###
@@ -196,33 +207,55 @@
 	# # These concepts are about your methods and classes not doing too much and
 	# # not having a 'god class' or a blob. Methods should only have one thing 
 	# # they do and classes should hold what they need to.
-	#
-	# #before
-	# class Parent
-	# 	def sleep
-	# 		if child.awake == false
-	# 			awake = false
+	# before
+	# class BankAccount
+	# 	attr_reader :balance
+	# 	attr_accessor :name
+	# 	def initialize(name)
+	# 		@name = name
+	# 		@balance = 0
+	# 		@@number_of_accounts += 1
+	# 	end
+	# 	def take_or_give_money(amount)
+	# 		if amount > 0
+	# 			@balance -= amount unless @balance < 1
+	# 		else
+	# 			@balance += amount
 	# 		end
 	# 	end
 	# end
-	# class Child
-	# 	attr_reader :awake
-	# 	def initialize
-	# 		@awake
+	#
+	# # after
+	# class BankAccount
+	# 	attr_reader :balance
+	# 	attr_accessor :name
+	# 	@@number_of_accounts ||= 0
+	# 	def initialize(name)
+	# 		@name = name
+	# 		@balance = 0
+	# 		@@number_of_accounts += 1
 	# 	end
 	#
-	# #after
-	# class Parent
-	# 	def sleep
-	# 		awake = false if child.asleep?
+	# 	def self.create_for(name)
+	# 		@accounts ||= []
+	# 		@accounts << BankAccount.new(name) 
 	# 	end
-	# end
-	# class Child
-	# 	def initialize
-	# 		@awake
+	#
+	# 	# now we have a method for positive transactions
+	# 	# and another for negative 
+	# 	def deposit(amount)
+	# 		@balance += amount
 	# 	end
-	# 	def asleep?
-	# 		true unless @awake
+	#
+	# 	def withdraw(amount)
+	# 		@balance -= amount unless overdrawn?
+	# 	end
+	#
+	# 	# we managed to abstract out a little more here
+	# 	# for the sake of readability
+	# 	private
+	# 	def overdrawn?
+	# 		@balance < 1
 	# 	end
 	# end
 
@@ -230,27 +263,106 @@
 	# # Decoupling of your classes is making them more autonomous. An advantage to 
 	# # this is when you make changes to your code and it breaks you can easily
 	# # trace how the objects are interacting if there is less interaction. This 
-	# # by nature makes the likeliness of your code breaking during change lower.
+	# # by nature makes the likeliness of your code breaking during change later.
 	#
 	# #before
-	# class Parent
-	# 	def ask_permission(child_sender)
-	# 		true unless child_sender.has_been_naughty?
-	# 	end
-	# end
-	# class Child
-	# 	def jump_on_bed
-	# 		jumping_on_bed = true if parent.ask_permission(self)
-	# 	end
-	# end
+	class BankAccount
+		attr_accessor :name, :balance
+		# class variable
+		@@number_of_accounts ||= 0
+		def initialize(name)
+			#instance variable
+			@name = name
+			@balance = 0
+			@@number_of_accounts += 1
+		end
+
+		end
+	
+	end
+
+
+
+	jared = BankAccount.new("Jared Smith")
+	
+	#depositing
+	jared.balance += 100
+	puts jared.balance
+	
+	#withdrawing
+	jared.balance -= 100
+	puts jared.balance
+
+	#overdrawing
+	jared.balance -= 10
+	puts jared.balance
+
+	
+	#what if we wanted to add functionality for
+	#checking if an account is overdrawn? we would 
+	#have to write more driver code because we are
+	#accessing the internal methods ourselves
+	#depositing
+	jared.balance += 110
+	puts jared.balance
+	
+	#withdrawing
+	jared.balance -= 100 unless jared.balance < 1
+	puts jared.balance
+
+	#overdrawing
+	jared.balance -= 10 unless jared.balance < 1
+	puts jared.balance
+
+
+
+	# if we weren't accessing internal information
+	# and performing operations on it and calling methods
+	# on it, then we could change the underlying processes
+	# and not break anything because the dependence on
+	# BankAccount wouldn't be as strong
 	#
 	# #after
-	# class Parent
-	# end
-	# class Child
-	# 	def jump_on_bed
-	# 		jumping_on_bed = true
-	# 	end
-	# end
+	class BankAccount
+		attr_reader :balance
+		attr_accessor :name
+		# class variable
+		@@number_of_accounts ||= 0
+		def initialize(name)
+			#instance variable
+			@name = name
+			@balance = 0
+			@@number_of_accounts += 1
+		end
 
+		#class method
+		def self.create_for(name)
+			@accounts ||= []
+			@accounts << BankAccount.new(name) 
+		end
+
+		#instance method
+		def deposit(amount)
+			@balance += amount
+		end
+
+		def withdraw(amount)
+			@balance -= amount unless overdrawn?
+		end
+
+		private
+		def overdrawn?
+			@balance < 1
+		end
+	
+	end
+
+	jared = BankAccount.new("Jared Smith")
+	
+	jared.deposit(100)
+	puts jared.balance
+	jared.withdraw(100)
+	puts jared.balance
+	jared.withdraw(10)
+	puts jared.balance
 
