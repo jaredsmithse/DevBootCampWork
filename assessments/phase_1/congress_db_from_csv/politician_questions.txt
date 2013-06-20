@@ -1,0 +1,33 @@
+Let's start with some COUNT queries:
+
+1. How many Republican representatives are there? 240
+		SELECT COUNT(*) FROM politicians
+  	WHERE party = 'R' AND name LIKE 'Rep%';
+
+2. How many Democrats? 238
+		SELECT COUNT(*) FROM politicians
+		WHERE party = 'D';
+
+3. How about senators, Republican and Democrat? 100
+		SELECT COUNT(*) FROM politicians
+  	WHERE name LIKE 'Sen%';
+
+
+
+Now let's move on to INSERT and UPDATE and DELETE:
+
+1. Quick, while no one is looking, add Shereef Bishay to the database.
+		INSERT INTO politicians 
+  		(name, party, state, longitude, lattitude, grade_level_since_1996, grade_level, years_in_congress, dw1_score)
+   	VALUES('Shereef Bishay','L','CA',12.4354,34.3453,4.598,4.2342,1,4.56);
+
+2. Copy the information for Dianne Feinstein and add that data as if it was his. (She's one of our California senators!)
+		UPDATE politicians
+		SET party = 'D', state = 'CA', longitude = 37.6383000004448, lattitude = -120.999589999978, grade_level_since_1996 = 12.37701267, grade_level = 12.19367, years_in_congress = 17, dw1_score = -0.28
+		WHERE name LIKE 'Shereef%';
+
+3. Now let's delete Dianne's entry so nobody sees anything fishy with three senators from California.
+		DELETE FROM politicians WHERE id = 422;
+
+
+
