@@ -29,7 +29,7 @@ module PoliticianDB
   def self.seed(filename)
     CSV.foreach(filename) do |entry|
       next if entry[0] == "Name"
-      state, lat, long = entry[2].sub("(","").sub(")","").sub(",","").split(" ")
+      state, lat, long = parse_location(entry[2])
       $db.execute(
         <<-SQL
           INSERT INTO politicians 
@@ -41,6 +41,10 @@ module PoliticianDB
     end
   end
 
+  def self.parse_location(entry)
+    entry.sub("(","").sub(")","").sub(",","").split(" ")
+  end
+
   def self.drop
     $db.execute("DROP politicians IF EXISTS;")
   end
@@ -49,24 +53,32 @@ end
 class Politician
   @@politicians = []
   def initialize(data)
-    @name = data[0] 
-    @party = data[1] 
-    @state = data[2] 
-    @longitude = data[3] 
-    @lattitude = data[4] 
-    @grade_level_since_1996 = data[5] 
-    @grade_level = data[6] 
-    @years_in_congress = data[7] 
-    @dw1_score = data[8]  
+    @id = data[0]
+    @name = data[1] 
+    @party = data[2] 
+    @state = data[3] 
+    @longitude = data[4] 
+    @lattitude = data[5] 
+    @grade_level_since_1996 = data[6] 
+    @grade_level = data[7] 
+    @years_in_congress = data[8] 
+    @dw1_score = data[9]  
   end
 
   def save
+    saved_before? ? insert : update
+  end
+
+  def insert
     $db.execute(
       <<-SQL
         INSERT INTO politicians 
-          (name, party, state, longitude, lattitude, grade_level_since_1996, grade_level, years_in_congress, dw1_score)
+          (name, party, state, longitude, lattitude, grade_level_since_1996, 
+            grade_level, years_in_congress, dw1_score)
         VALUES
-          ('#{entry[0]}', '#{entry[1]}', '#{state}', '#{lat}', '#{long}', '#{entry[3]}', '#{entry[4]}', '#{entry[5]}', '#{entry[6]}');
+          ('#{@id}', '#{@name}', '#{@party}', '#{@state}', '#{@longitude}', 
+            '#{@lattitude}', '#{@grade_level_since_1996}', '#{@grade_level}', 
+            '#{@years_in_congress}', '#{@dw1_score}');
       SQL
         )
   end
@@ -90,7 +102,6 @@ class Politician
 end
 PoliticianDB.setup
 PoliticianDB.seed('politician_data.csv')
-Politician.delete(1)
 
 
 
