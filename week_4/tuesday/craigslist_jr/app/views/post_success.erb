@@ -1,0 +1,17 @@
+<div class="container">
+  <h1>Craigslist Jr.</h1>
+  <h2>Success! You have submitted a post to Craigslist Jr.</h2>
+
+  <%= "Here is your post: #" %>
+  <br>
+  <%= "And here is your link: link" %>
+  <br>
+
+  <h3>All Posts : </h3>
+  <ul>
+  <% @all_posts.each do |post| %>
+  <li><%= "#{post.title} #{post.category_id}" %></li>
+  <% end %>
+  </ul>
+  
+</div>
