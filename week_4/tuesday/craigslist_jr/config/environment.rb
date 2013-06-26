@@ -11,6 +11,8 @@ require 'rubygems'
 require 'uri'
 require 'pathname'
 
+require 'digest/md5'
+
 require 'pg'
 require 'active_record'
 require 'logger'

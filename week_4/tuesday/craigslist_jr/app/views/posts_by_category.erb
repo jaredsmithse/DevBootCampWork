@@ -4,8 +4,11 @@
   <%="<h2>Here is a list of our posts for #{@current_category}: </h2>"%>
   <ul>
     <% @posts_by_category.each do |post| %>
-    <%="<a href='/?category=#{post.title}'> <li>#{post.title} is a post</li> </a>"%>
+    <%="<a href='/posts/#{post.id}'> <li>#{post.title}</li> </a>"%>
+    <% puts post %>
     <% end %>
   </ul>
-
+  <form action="/" method="post">
+		<input type="submit" value="Home">
+	</form>
 </div>

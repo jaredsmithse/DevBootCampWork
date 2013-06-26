@@ -2,16 +2,20 @@
   <h1>Craigslist Jr.</h1>
   <h2>Success! You have submitted a post to Craigslist Jr.</h2>
 
-  <%= "Here is your post: #" %>
+  <%= "Here is your post: #{}" %>
   <br>
   <%= "And here is your link: link" %>
   <br>
 
   <h3>All Posts : </h3>
   <ul>
-  <% @all_posts.each do |post| %>
-  <li><%= "#{post.title} #{post.category_id}" %></li>
-  <% end %>
+    <% @all_posts.each do |post| %>
+    <%="<a href='/posts/#{post.id}'> <li>#{post.title}</li> </a>"%>
+    <% puts post %>
+    <% end %>
   </ul>
+  <form action="/" method="post">
+    <input type="submit" value="Home">
+  </form>
   
 </div>

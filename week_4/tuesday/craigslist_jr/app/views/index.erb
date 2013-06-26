@@ -4,26 +4,31 @@
   <h2>Here is a list of our categories: </h2>
   <ul>
     <% @categories.each do |category| %>
-    <%="<a href='/?category=#{category.title}'> <li>#{category.title}</li> </a>"%>
+    <a href=<%= "/category/#{category.id}" %>> 
+      <li><%= category.title %></li> 
+    </a>
     <% end %>
   </ul>
 
 
   <form action="/submit" method="post">
     Submit your posting:
-    <br>
+    <br><br>
     <span>Title</span><br>
-    <input type="text" name="title">
-    <br>
+    <input type="text" name="post[title]">
+    <br><br>
     <span>Description</span><br>
-    <input type="text" name="description">
-    <br>
+    <input type="text" name="post[description]">
+    <br><br>
+    <span>Category</span><br>
+    <input type="text" name="category[title]">
+    <br><br>
     <span>Location</span><br>
-    <input type="text" name="location">
-    <br>
+    <input type="text" name="post[location]">
+    <br><br>
     <span>Cost</span><br>
-    <input type="text" name="cost">
-    <br>
+    <input type="text" name="post[cost]">
+    <br><br>
     <input type="submit" value="Submit">
   </form>
 </div>
