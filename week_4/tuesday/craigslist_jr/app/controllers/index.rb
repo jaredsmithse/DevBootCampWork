@@ -24,13 +24,13 @@ end
 
 post '/submit' do
   category = Category.find_or_create_by_title(params[:category])
-	post = Post.create(params[:post])
-  category.posts << post
+	@newest_post = Post.create(params[:post])
+  category.posts << @newest_post
 	redirect '/success'
 end
 
-get '/edit/:id' do
-  @edit_post = Post.find_by_id(params[:id])
+get '/edit/:hash' do
+  @edit_post = Post.find_by_id(SecretKeyRelation.find_by_key(params[:hash]).post_id)
   erb :edit_post
 end
 
