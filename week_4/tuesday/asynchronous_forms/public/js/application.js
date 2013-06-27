@@ -1,7 +1,13 @@
-$(document).ready(function() {
-  // This is called after the document has loaded in its entirety
-  // This guarantees that any elements we bind to will exist on the page
-  // when we try to bind to them
+function doWhenServerReturns(serverResponse) {
+	$('#grandma-says').html(serverResponse);
+	$('form > input[name="user_input"]').val("").focus();
+}
 
-  // See: http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
+$(document).ready(function() {
+	$('form').submit(function(evt) {
+		var input = $(this).serialize()
+		evt.preventDefault()
+		$.post('/grandma', input).done(doWhenServerReturns);
+		// same as $.post('/grandma', input, doWhenServerReturns);
+	});
 });
