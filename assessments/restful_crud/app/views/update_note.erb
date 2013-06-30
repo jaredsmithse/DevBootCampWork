@@ -1,0 +1,15 @@
+<div class="container">
+  <h1>Update Your Note</h1>
+  
+  <br><br>
+  
+  <form action="/create_note" method="post">
+
+    <input type="text" name="title" value="<%= @note.title %>"><br><br>
+
+    <textarea rows="10" cols="60" name="content" ><%= @note.content %></textarea><br><br>
+    
+    <button type="submit">Save</button>
+  </form>
+
+</div>
