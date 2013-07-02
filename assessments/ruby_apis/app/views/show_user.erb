@@ -1,0 +1,15 @@
+<h1>Hello <%= @user[:name] %>!</h1>
+<div class="container">
+	<img src=<%=@user[:avatar_url]%>>
+	<h2>Location: <%=@user[:location]%></h2>
+	<% if @user[:hireable] %>
+		<% unless @user[:comapany].nil? %>
+			<h2>You work at <%= @user[:company] %> but you are looking for something more</h2>
+		<% else %>
+			<h2>You are looking for a job, no?</h2>
+		<% end %>
+	<% end %>
+	<h2>You have <%= @user[:followers] %> followers! </h2>
+
+
+</div>
