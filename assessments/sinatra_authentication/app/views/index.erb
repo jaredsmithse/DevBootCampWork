@@ -1,0 +1,14 @@
+<div class="container">
+
+  <% unless @users.nil? %>
+  	<h1>Welcome</h1>
+  <% else %>
+  	<ul>
+  	<% @users.each do |user| %>
+  		<li><%= user.name %></li>
+  	<% end %>
+  	</ul>
+  <% end %>
+
+
+</div>
