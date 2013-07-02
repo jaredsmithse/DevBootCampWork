@@ -1,0 +1,22 @@
+.container {
+  margin: 0 auto;  
+  width: 720px;
+}
+
+li {
+	display: inline;
+}
+
+.feature {
+	columns:350px 2;
+	-webkit-columns:350px 2; /* Safari and Chrome */
+	-moz-columns:350px 2; /* Firefox */
+}
+
+.column-elem {
+	display: inline-block;
+}
+
+.pic {
+	margin-top: 30px;
+}
