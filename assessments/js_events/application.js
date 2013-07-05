@@ -4,9 +4,15 @@ $(document).ready(function() {
   function bindEvents() {
     $('.add').click(buildTodo);
 
-    $("#todo_template").on('click','a.delete', function () {
-      $('.complete').click(completeTodo);
-      $('.delete').click(deleteTodo);
+    $("body").on('click','a.delete', function (e) {
+      e.preventDefault();
+      $(this).parents()[2].remove();
+    });
+
+    $("body").on('click','a.complete', function (e) {
+      e.preventDefault();
+      var h2 = $(this).parents().eq(2).find('h2')
+      h2.html(h2.text() + " [complete]")
     });
   }
 
@@ -21,14 +27,6 @@ $(document).ready(function() {
   
   function addTodo(todo) {
     $('body').append(todo);
-  }
-
-  function completeTodo(event) {
-    debugger
-  }
-
-  function deleteTodo(event) {
-    debugger
   }
 
   bindEvents();
