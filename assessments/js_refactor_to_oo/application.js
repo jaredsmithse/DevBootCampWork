@@ -1,9 +1,7 @@
 $(document).ready(function() {
   dice = new Dice();
   $('#roller button.add').on('click', dice.add);
-
   $('#roller button.roll').on('click', dice.rollAll);
-
 });
 
 function Dice() {
@@ -16,7 +14,6 @@ function Die() {
 }
 
 Dice.prototype.rollAll = function() {
-  console.log(this);
   for (var i = 0; i < Dice.dice.length; i++) {
     Dice.dice[i].roll();
   }
