@@ -5,6 +5,7 @@ $(document).ready(function() {
 });
 
 function Dice() {
+
 }
 
 Dice.dice = []
