@@ -1,0 +1,14 @@
+<form class='create-event' action='create' method='post'>
+  <input type='text' name='title' placeholder='event title' value=<%=@params[:title]%>>
+  <input type='date' name='date' value=<%=@params[:date]%>>
+  <input type='text' name='organizer_name' placeholder='event organizer' value=<%=@params[:organizer_name]%>>
+  <input type='email' name='organizer_email' placeholder='event organizer email' value=<%=@params[:organizer_email]%>>
+  <button type='submit'>create</button>
+</form>
+<% if @errors %>
+	<ul>
+	<% @errors.each do |error, message| %>
+	<li><%= error.to_s + " " + message %></li>
+	<% end %>
+</ul>
+<% end %>
