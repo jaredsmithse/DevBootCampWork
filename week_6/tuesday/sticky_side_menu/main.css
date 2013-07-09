@@ -1,0 +1,41 @@
+.container {
+  margin: 0 auto;  
+  width: 720px;
+}
+
+header, .content {
+	margin-left: 165px;
+}
+
+nav {
+	background: rgb(203,203,203);
+	float: left;
+	position: fixed;
+	width: 150px;
+	height: 100%;
+	top: 0px;
+	border-right: 2px solid gray;
+}
+
+nav ul {
+	list-style: none;
+	padding: 0px;
+}
+
+nav a {
+	text-decoration: none;
+	color: black;
+	vertical-align: middle;
+}
+
+nav a:hover {
+	color: gray;
+}
+
+nav li {
+	margin-top: 8px;
+	border-bottom: 1px solid gray;
+	padding-bottom: 4px;
+	width: 150px;
+	text-indent: 10px;
+}
