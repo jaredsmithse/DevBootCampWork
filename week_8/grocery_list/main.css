@@ -1,0 +1,48 @@
+body {
+  font-family: sans-serif;
+}
+
+.row {
+  margin-left: -20px;
+}
+
+.span6 {
+  padding-left: 10px;
+  margin-left: 10px;
+  max-width: 50%;
+  float: left;
+  height: 100%;
+}
+
+.span6:last-child {
+  border-left: 1px solid #ddd;
+}
+
+td, th {
+  padding: 4px;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #cdcdcd;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #bcbcbc;
+}
+
+table {
+  background-color: #eee;
+  border: 1px solid #bbb; 
+}
+
+table#grocery_list tfoot {
+  color: red;
+}
+
+.item, .item * {
+  cursor: pointer;
+  -webkit-user-select: none; /* Chrome/Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+  user-select: none;
+}
