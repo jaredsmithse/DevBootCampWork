@@ -1,5 +1,9 @@
 class HomeController < ApplicationController
 	def index
-		@articles = Article.all.group_by(:category)
+		@categories = Category.all
+		@articles = []
+		@categories.each do |category|
+			@articles << category.articles
+		end
 	end
 end

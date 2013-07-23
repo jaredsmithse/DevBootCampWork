@@ -1,0 +1,8 @@
+<% @categories.each_with_index do |category, index| %>
+  <h3><%= category.title %></h3>
+  <ul>
+    <% @articles[index].each do |article| %>
+      <li><%= link_to "#{article.title}", category_article_path(category.url_title, article.url_title) %></li>
+    <% end %>
+  </ul>
+<% end %>
